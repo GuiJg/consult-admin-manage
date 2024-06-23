@@ -42,7 +42,7 @@ function CreateUserForm() {
                 // Tratar explicitamente o erro 500, se necessário
                 toast.success(`Cliente cadastrado com sucesso!`);
                 getUsers();
-                navigate("/usuarios-dados");
+                navigate("/usuarios");
             } else {
                 // Outros erros
                 toast.error(error.message);

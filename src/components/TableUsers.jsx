@@ -22,7 +22,7 @@ function TableList() {
             console.log(response.data);
             setUsers(response.data);
         } catch (error) {
-            toast.error("Erro ao carregar os usuários");
+            toast.error('Erro ao carregar os usuários');
         } finally {
             setIsLoading(false);
         }

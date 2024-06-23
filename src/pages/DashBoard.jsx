@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 function Home() {
-    const [, setDado] = useState([]);
+    const [dado, setDado] = useState([]);
     const [, setIsLoading] = useState(false);
 
     const getUsers = async () => {
@@ -25,6 +25,13 @@ function Home() {
     return (
         <>
             <h1>DashBoard</h1>
+            {dado.map((user) => (
+                <div key={user.id}>
+                    <p>{user.name}</p>
+                    <p>{user.email}</p>
+                    <p>{user.cpf}</p>
+                </div>
+            ))}
         </>
     )
 }
