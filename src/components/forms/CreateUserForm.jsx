@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import InputMask from 'react-input-mask';
 
 function CreateUserForm() {
     const [, setDado] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [cpf, setCpf] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [tel, setTel] = useState("");
@@ -32,7 +34,7 @@ function CreateUserForm() {
         e.preventDefault();
         try {
             setIsLoading(true);
-            const response = await axios.post("https://consultas-server.vercel.app/users", { name, email, tel });
+            const response = await axios.post("https://consultas-server.vercel.app/users", { cpf, name, email, tel });
             toast.success(`Usuário ${response.data.name} criado com sucesso`);
             getUsers();
         } catch (error) {
@@ -40,7 +42,7 @@ function CreateUserForm() {
                 // Tratar explicitamente o erro 500, se necessário
                 toast.success(`Cliente cadastrado com sucesso!`);
                 getUsers();
-                navigate("/");
+                navigate("/usuarios-dados");
             } else {
                 // Outros erros
                 toast.error(error.message);
@@ -50,25 +52,46 @@ function CreateUserForm() {
         }
     }
 
-    return ( 
-        <form onSubmit={createUsers}>
-                <div>
-                    <label>Nome</label>
-                    <input type="text" value={name} required onChange={(e) => setName(e.target.value)} placeholder="Nome do usuario" />
+    return (
+        <form className="create-form" onSubmit={createUsers}>
+            <div className="double-input">
+                <div className="form-content">
+                    <label>Nome*</label>
+                    <input type="text" value={name} required onChange={(e) => setName(e.target.value)} placeholder="Nome do paciente" />
                 </div>
-                <div>
-                    <label>Email</label>
-                    <input type="text" value={email} required onChange={(e) => setEmail(e.target.value)} placeholder="E-mail" />
+                <div className="form-content">
+                    <label>CPF*</label>
+                    <InputMask
+                        mask="999.999.999-99"
+                        maskChar=" "
+                        type="text"
+                        value={cpf}
+                        required
+                        onChange={(e) => setCpf(e.target.value)}
+                        placeholder="CPF do paciente"
+                    />
                 </div>
-                <div>
-                    <label>Telefone</label>
-                    <input type="number" value={tel} required onChange={(e) => setTel(e.target.value)} placeholder="Telefone" />
-                </div>
-                <div>
-                    {!isLoading && (<button>Cadastrar</button>)}
-                </div>
-            </form>
-     );
+            </div>
+            <div className="form-content">
+                <label>Email*</label>
+                <input type="text" value={email} required onChange={(e) => setEmail(e.target.value)} placeholder="E-mail do paciente" />
+            </div>
+            <div className="form-content">
+                <label>Telefone*</label>
+                <InputMask
+                    mask="(99) 99999-9999"
+                    type="text"
+                    value={tel}
+                    required
+                    onChange={(e) => setTel(e.target.value)}
+                    placeholder="Telefone do paciente"
+                />
+            </div>
+            <div>
+                {!isLoading && (<button>CADASTRAR</button>)}
+            </div>
+        </form>
+    );
 }
 
 export default CreateUserForm;

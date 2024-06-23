@@ -1,35 +1,41 @@
 import { Menu } from "antd";
-import { HomeOutlined, ScheduleOutlined, UserAddOutlined, SettingOutlined, FormOutlined, UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { HomeOutlined, ScheduleOutlined, UserAddOutlined, FormOutlined, UserOutlined } from "@ant-design/icons";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const MenuList = ({ darkTheme }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleMenuItemClick = (path) => {
+        navigate(path);
+    }
 
     return (
         <Menu
             theme={darkTheme ? "dark" : "light"}
             mode="inline" className="menu-bar"
+            defaultSelectedKeys={[location.pathname]}
+            onClick={({ key }) => handleMenuItemClick(key)}
         >
-            <Menu.Item className="menu-item" key="home" icon={<HomeOutlined />}>
-                <Link to={"/"} className="sidebar-link">Dashboard</Link>
+            <Menu.Item className="menu-item" key="/" icon={<HomeOutlined />}>
+                <Link to="/" className="sidebar-link">Dashboard</Link>
             </Menu.Item>
-            <Menu.Item className="menu-item" key="schedule" icon={<ScheduleOutlined />}>
-                <Link to={"/agendamentos"}>Agendamentos</Link>
+            <Menu.Item className="menu-item" key="/agendamentos" icon={<ScheduleOutlined />}>
+                <Link to="/agendamentos">Agendamentos</Link>
             </Menu.Item>
-            <Menu.Item className="menu-item" key="formSchedule" icon={<FormOutlined />}>
-                <Link to={"/agendar"}>Agendar</Link>
+            <Menu.Item className="menu-item" key="/usuarios-dados" icon={<UserOutlined />}>
+                <Link to="/usuarios-dados" onClick={handleMenuItemClick}>Pacientes</Link>
             </Menu.Item>
-            <Menu.Item className="menu-item" key="createClients" icon={<UserAddOutlined />}>
-                <Link to={"/cadastrar-clientes"}>Cadastrar Pacientes</Link>
+            <Menu.Item className="menu-item" key="/agendar" icon={<FormOutlined />}>
+                <Link to="/agendar">Agendar Consultas</Link>
             </Menu.Item>
-            <Menu.Item className="menu-item" key="clients" icon={<UserOutlined />}>
-                <Link to={"/usuarios-dados"}>Pacientes</Link>
-            </Menu.Item>
-            <Menu.Item className="menu-item" key="settings" icon={<SettingOutlined />}>
-                <Link to={"/configuracoes"}>Configurações</Link>
+            <Menu.Item className="menu-item" key="/cadastrar-clientes" icon={<UserAddOutlined />}>
+                <Link to="/cadastrar-clientes">Cadastrar Pacientes</Link>
             </Menu.Item>
         </Menu>
     )
 }
 
 export default MenuList;
+

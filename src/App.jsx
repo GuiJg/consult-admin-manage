@@ -5,19 +5,17 @@ import { Breadcrumb, Button, Layout } from "antd"
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
 
 //pages
-import Home from "./pages/Inicio"
+import Home from "./pages/DashBoard"
 import CadClientes from "./pages/CadClientes"
-import Agendar from "./pages/Agendar"
+import Agendamentos from "./pages/SchedulesData"
+import UsersData from "./pages/UsersData"
+import CadConsult from "./pages/CadConsult"
 
 //components
 import Logo from "./components/Logo"
 import MenuList from "./components/MenuList"
 import ToggleThemeButton from "./components/ToggleThemeButton"
-import Agendamentos from "./pages/Agendamentos"
-import LoginAdm from "./pages/LoginAdm"
-import Settings from "./pages/Settings"
-import Profile from "./pages/ProfileAdm"
-import UsersData from "./pages/UsersData"
+
 
 const { Sider } = Layout
 
@@ -55,12 +53,9 @@ function App() {
                         ]} />
                     <Routes>
                         <Route index element={<Home />} />
-                        <Route path="/agendar" element={<Agendar />} />
+                        <Route path="/agendar" element={<CadConsult />} />
                         <Route path="/agendamentos" element={<Agendamentos />} />
                         <Route path="/cadastrar-clientes" element={<CadClientes />} />
-                        <Route path="/Login" element={<LoginAdm />} />
-                        <Route path="/configuracoes" element={<Settings />} /> 
-                        <Route path="/perfil-adm" element={<Profile />} />
                         <Route path="/usuarios-dados" element={<UsersData />} />
                     </Routes>
                     <Toaster
