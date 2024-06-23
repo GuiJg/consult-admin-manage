@@ -19,6 +19,7 @@ function TableList() {
         setIsLoading(true);
         try {
             const response = await axios.get("https://consultas-server.vercel.app/users");
+            console.log(response.data);
             setUsers(response.data);
         } catch (error) {
             toast.error("Erro ao carregar os usuários");
@@ -78,7 +79,7 @@ function TableList() {
             if (error.response && error.response.status === 500) {
                 toast.success("Usuário editado com sucesso!");
                 getUsers();
-                navigate("/usuarios-dados");
+                navigate("/usuarios");
             }
         } finally {
             setIsLoading(false);

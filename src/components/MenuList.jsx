@@ -25,7 +25,7 @@ const MenuList = ({ darkTheme }) => {
                 <Link to="/agendamentos">Agendamentos</Link>
             </Menu.Item>
             <Menu.Item className="menu-item" key="/usuarios-dados" icon={<UserOutlined />}>
-                <Link to="/usuarios-dados" onClick={handleMenuItemClick}>Pacientes</Link>
+                <Link to="/usuarios" onClick={handleMenuItemClick}>Pacientes</Link>
             </Menu.Item>
             <Menu.Item className="menu-item" key="/agendar" icon={<FormOutlined />}>
                 <Link to="/agendar">Agendar Consultas</Link>

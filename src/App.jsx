@@ -56,7 +56,7 @@ function App() {
                         <Route path="/agendar" element={<CadConsult />} />
                         <Route path="/agendamentos" element={<Agendamentos />} />
                         <Route path="/cadastrar-clientes" element={<CadClientes />} />
-                        <Route path="/usuarios-dados" element={<UsersData />} />
+                        <Route path="/usuarios" element={<UsersData />} />
                     </Routes>
                     <Toaster
                         position="top-right"
