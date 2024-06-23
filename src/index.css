@@ -70,7 +70,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
-	align-items: center;
 	position: fixed;
 	gap: 2rem;
 	width: 15%;
