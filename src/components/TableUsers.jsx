@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -6,7 +6,7 @@ import Alert from "sweetalert2";
 import ModalEditUser from "./ModalEditUser";
 import { useNavigate } from "react-router-dom";
 import ReactInputMask from "react-input-mask";
-
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 function TableList() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,6 @@ function TableList() {
         setIsLoading(true);
         try {
             const response = await axios.get("https://consultas-server.vercel.app/users");
-            console.log(response.data);
             setUsers(response.data);
         } catch (error) {
             toast.error('Erro ao carregar os usuários');
@@ -33,7 +32,6 @@ function TableList() {
     }, []);
 
     const deleteUser = async (id) => {
-        console.log(id);
         const result = await Alert.fire({
             title: 'Tem certeza que deseja deletar este usuário?',
             icon: 'warning',
@@ -112,10 +110,11 @@ function TableList() {
             title: "Ações",
             dataIndex: "actions",
             key: "actions",
+            align: "center",
             render: (_, data) => (
                 <div className="actions-body" style={{ display: 'flex', gap: '1rem' }}>
-                    <button onClick={() => handleEditClick(data)}>Editar</button>
-                    <button onClick={() => deleteUser(data.key)}>Excluir</button>
+                    <Button onClick={() => handleEditClick(data)}><EditOutlined /></Button>
+                    <Button onClick={() => deleteUser(data.key)}><DeleteOutlined /></Button>
                 </div>
             )
         }
