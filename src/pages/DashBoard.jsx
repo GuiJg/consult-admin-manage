@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 // const VITE_DATABASE_URL = import.meta.env.VITE_DATABASE_URL;
 
-function Home() {
+function Home() {   
     const [, setDado] = useState([]);
     const [, setIsLoading] = useState(false);
 
