@@ -24,11 +24,11 @@ const MenuList = ({ darkTheme }) => {
             <Menu.Item className="menu-item" key="/agendamentos" icon={<ScheduleOutlined />}>
                 <Link to="/agendamentos">Agendamentos</Link>
             </Menu.Item>
-            <Menu.Item className="menu-item" key="/usuarios-dados" icon={<UserOutlined />}>
+            <Menu.Item className="menu-item" key="/usuarios" icon={<UserOutlined />}>
                 <Link to="/usuarios" onClick={handleMenuItemClick}>Pacientes</Link>
             </Menu.Item>
             <Menu.Item className="menu-item" key="/cadastrar-pacientes" icon={<UserAddOutlined />}>
-                <Link to="/cadastrar-clientes">Cadastrar Pacientes</Link>
+                <Link to="/cadastrar-pacientes">Cadastrar Pacientes</Link>
             </Menu.Item>
             <Menu.Item className="menu-item" key="/agendar" icon={<FormOutlined />}>
                 <Link to="/agendar">Agendar Consultas</Link>
