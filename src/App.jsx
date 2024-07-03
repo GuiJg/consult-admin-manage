@@ -5,7 +5,7 @@ import { Breadcrumb, Button, Layout } from "antd"
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
 
 //pages
-import Home from "./pages/Dashboard"
+import Home from "./pages/DashBoard"
 import CadClientes from "./pages/CadClientes"
 import Agendamentos from "./pages/SchedulesData"
 import UsersData from "./pages/UsersData"
