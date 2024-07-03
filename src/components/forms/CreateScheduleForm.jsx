@@ -46,7 +46,7 @@ function CreateScheduleForm() {
     }
 
     useEffect(() => {
-        getSchedule();
+        getSchedule(); 
     }, [])
 
     const createSchedule = async (e) => {

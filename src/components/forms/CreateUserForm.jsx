@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import InputMask from 'react-input-mask';
 
-const VITE_USER_DATABASE_URL = import.meta.env.VITE_USER_DATABASE_URL;
+const VITE_USER_DATABASE_URL = import.meta.env.VITE_USER_DATABASE_URL; 
 
 function CreateUserForm() {
     const [, setDado] = useState([]);

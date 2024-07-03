@@ -64,7 +64,7 @@ function TableList() {
             try {
                 await axios.delete(`${VITE_SCHEDULE_DATABASE_URL}/${id}`);
                 getSchedule();
-                toast.success("Agendamento deletado");
+                toast.success("Agendamento deletado"); 
             } catch (error) {
                 if (error.response && error.response.status === 500) {
                     toast.success("Agendamento deletado com sucesso!");

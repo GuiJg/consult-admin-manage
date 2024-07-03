@@ -53,8 +53,8 @@ function TableList() {
             }
         }
     };
-
-    const handleEditClick = (user) => {
+ 
+    const handleEditClick = (user) => { 
         console.log(user);
         setCurrentUser(user);
         setIsOpen(true);
