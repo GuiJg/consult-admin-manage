@@ -4,8 +4,8 @@ import toast from "react-hot-toast";
 
 // const VITE_DATABASE_URL = import.meta.env.VITE_DATABASE_URL;
 
-function Home() {   
-    const [, setDado] = useState([]);
+function Home() {       
+    const [dado, setDado] = useState([]);
     const [, setIsLoading] = useState(false);
 
     const getUsers = async () => {
@@ -26,7 +26,16 @@ function Home() {
 
     return (
         <>
-            <h1>Dashboard</h1>
+            {dado.map((user) => (
+                <div key={user.id}>
+                    <br />
+                    <p>Nome: {user.name}</p>
+                    <p>Email: {user.email}</p>
+                    <p>CPF: {user.cpf}</p>
+                    <p>Telefone: {user.tel}</p>
+                    <hr />
+                </div>
+            ))}
         </>
     )
 }
