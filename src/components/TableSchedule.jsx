@@ -14,6 +14,7 @@ function TableList() {
 
     const [dado, setDado] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isDeleteLoading, setIsDeleteLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [currentSchedule, setCurrentSchedule] = useState(null);
 
@@ -58,13 +59,17 @@ function TableList() {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, deletar'
-        })
+            confirmButtonText: 'Sim, deletar',
+            preConfirm: () => {
+                setIsDeleteLoading(true);
+            }
+        });
+        
         if (result.isConfirmed) {
             try {
                 await axios.delete(`${VITE_SCHEDULE_DATABASE_URL}/${id}`);
                 getSchedule();
-                toast.success("Agendamento deletado");
+                toast.success("Agendamento deletado"); 
             } catch (error) {
                 if (error.response && error.response.status === 500) {
                     toast.success("Agendamento deletado com sucesso!");
@@ -72,7 +77,11 @@ function TableList() {
                 } else {
                     toast.error(error.message);
                 }
+            } finally {
+                setIsDeleteLoading(false);
             }
+        } else {
+            setIsDeleteLoading(false);
         }
     };
 
@@ -199,6 +208,9 @@ function TableList() {
                     </form>
                 </ModalEditSchedule>
             )}
+            <Spin spinning={isDeleteLoading}>
+                <div style={{ height: '100px' }} /> {/* Placeholder for spinner */}
+            </Spin>
         </>
     );
 }

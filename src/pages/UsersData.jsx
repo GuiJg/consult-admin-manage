@@ -3,7 +3,7 @@ function UsersData() {
 
     return (
         <>
-            <h2 id="table-title">Dados dos usuários</h2>
+            <h2 id="table-title">Dados dos usuários</h2>
             <TableUsers />
         </>
     );

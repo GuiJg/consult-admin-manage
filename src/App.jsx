@@ -61,7 +61,10 @@ function App() {
                     <Toaster
                         position="top-right"
                         reverseOrder={false}
-                        timeout={30000}
+                        gutter={10}
+                        toastOptions={{
+                            duration: 3000
+                        }}
                     />
                 </Layout>
             </Layout>

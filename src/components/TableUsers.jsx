@@ -11,6 +11,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 function TableList() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isDeleteLoading, setIsDeleteLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
 
@@ -41,8 +42,12 @@ function TableList() {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, deletar'
-        })
+            confirmButtonText: 'Sim, deletar',
+            preConfirm: () => {
+                setIsDeleteLoading(true);
+            }
+        });
+        
         if (result.isConfirmed) {
             try {
                 await axios.delete(`${VITE_USER_DATABASE_URL}/${id}`);
@@ -50,11 +55,15 @@ function TableList() {
                 toast.success("Usuário deletado");
             } catch (error) {
                 toast.error(error.message);
+            } finally {
+                setIsDeleteLoading(false);
             }
+        } else {
+            setIsDeleteLoading(false);
         }
     };
 
-    const handleEditClick = (user) => {
+    const handleEditClick = (user) => { 
         console.log(user);
         setCurrentUser(user);
         setIsOpen(true);
@@ -155,6 +164,9 @@ function TableList() {
                     </form>
                 </ModalEditUser>
             )}
+            <Spin spinning={isDeleteLoading}>
+                <div style={{ height: '100px' }} /> {/* Placeholder for spinner */}
+            </Spin>
         </>
     );
 }

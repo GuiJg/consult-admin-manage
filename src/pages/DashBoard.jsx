@@ -26,14 +26,10 @@ function Home() {
 
     return (
         <>
+            <h1>Dashboard</h1>
             {dado.map((user) => (
                 <div key={user.id}>
-                    <br />
-                    <p>Nome: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>CPF: {user.cpf}</p>
-                    <p>Telefone: {user.tel}</p>
-                    <hr />
+                    
                 </div>
             ))}
         </>
