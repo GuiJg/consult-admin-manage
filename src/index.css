@@ -66,6 +66,31 @@ body {
 	gap: 1rem;
 }
 
+#edit{
+	transition: 0.3s;
+}
+
+#delete{
+	transition: 0.3s;
+}
+
+#delete:hover{
+	border-color: #d61414;
+	color: #d61414;
+}
+
+#delete:active{
+	background-color: #d61414;
+	border-color: #d61414;
+	color: #fff;
+}
+
+#edit:active{
+	background-color: #2e8afa;
+	border-color: #2e8afa;
+	color: #fff;
+}
+
 .sidebar{
 	display: flex;
 	flex-direction: column;

@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Spin } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -7,6 +7,7 @@ import ModalEditUser from "./ModalEditUser";
 import { useNavigate } from "react-router-dom";
 import ReactInputMask from "react-input-mask";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+
 function TableList() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -52,8 +53,8 @@ function TableList() {
             }
         }
     };
- 
-    const handleEditClick = (user) => { 
+
+    const handleEditClick = (user) => {
         console.log(user);
         setCurrentUser(user);
         setIsOpen(true);
@@ -97,14 +98,14 @@ function TableList() {
             key: "tel",
         },
         {
-            title: "Ações",
+            title: "Ações",
             dataIndex: "actions",
             key: "actions",
             align: "center",
             render: (_, data) => (
                 <div className="actions-body" style={{ display: 'flex', gap: '1rem' }}>
-                    <Button onClick={() => handleEditClick(data)}><EditOutlined /></Button>
-                    <Button onClick={() => deleteUser(data.key)}><DeleteOutlined /></Button>
+                    <Button id="edit" onClick={() => handleEditClick(data)}><EditOutlined /></Button>
+                    <Button id="delete" onClick={() => deleteUser(data.key)}><DeleteOutlined /></Button>
                 </div>
             )
         }
@@ -123,7 +124,9 @@ function TableList() {
 
     return (
         <>
-            <Table className="table-ant" dataSource={dataSource} columns={columns} />
+            <Spin spinning={isLoading}>
+                <Table className="table-ant" dataSource={dataSource} columns={columns} />
+            </Spin>
 
             {isOpen && currentUser && (
                 <ModalEditUser isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -150,8 +153,6 @@ function TableList() {
                             {!isLoading && (<button type="submit">Editar</button>)}
                         </div>
                     </form>
-                    
-                    
                 </ModalEditUser>
             )}
         </>

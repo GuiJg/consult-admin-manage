@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Spin } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -64,7 +64,7 @@ function TableList() {
             try {
                 await axios.delete(`${VITE_SCHEDULE_DATABASE_URL}/${id}`);
                 getSchedule();
-                toast.success("Agendamento deletado"); 
+                toast.success("Agendamento deletado");
             } catch (error) {
                 if (error.response && error.response.status === 500) {
                     toast.success("Agendamento deletado com sucesso!");
@@ -128,14 +128,14 @@ function TableList() {
             key: "time",
         },
         {
-            title: "Ações",
+            title: "Ações",
             dataIndex: "actions",
             key: "actions",
             align: "center",
             render: (_, data) => (
                 <div className="actions-body" style={{ display: 'flex', gap: '1rem' }}>
-                    <Button onClick={() => handleEditClick(data)}><EditOutlined /></Button>
-                    <Button onClick={() => deleteSchedule(data.key)}><DeleteOutlined /></Button>
+                    <Button id="edit" onClick={() => handleEditClick(data)}><EditOutlined /></Button>
+                    <Button id="delete" onClick={() => deleteSchedule(data.key)}><DeleteOutlined /></Button>
                 </div>
             )
         }
@@ -155,7 +155,9 @@ function TableList() {
 
     return (
         <>
-            <Table className="table-ant" dataSource={dataSource} columns={columns} />
+            <Spin spinning={isLoading}>
+                <Table className="table-ant" dataSource={dataSource} columns={columns} />
+            </Spin>
 
             {isOpen && currentSchedule && (
                 <ModalEditSchedule isOpen={isOpen} onClose={() => setIsOpen(false)}>

@@ -24,6 +24,7 @@
     "react-input-mask": "^2.0.4",
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^6.23.1",
+    "react-spinners": "^0.14.1",
     "styled-components": "^6.1.11",
     "sweetalert2": "^11.12.0"
   },
