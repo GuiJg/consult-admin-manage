@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const VITE_DATABASE_URL = import.meta.env.VITE_DATABASE_URL;
+
 function Home() {
     const [, setDado] = useState([]);
     const [, setIsLoading] = useState(false);
@@ -9,10 +11,10 @@ function Home() {
     const getUsers = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("https://consultas-server.vercel.app/users");
+            const response = await axios.get(`${VITE_DATABASE_URL}`);
             setDado(response.data);
         } catch (error) {
-            toast.error("Erro ao carregar usuários" + error.message);
+            toast.error("Erro ao carregar usuários");
         } finally {
             setIsLoading(false);
         }
@@ -24,7 +26,7 @@ function Home() {
 
     return (
         <>
-            <h1>DashBoard</h1>
+            <h1>Dashboard</h1>
         </>
     )
 }

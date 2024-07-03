@@ -55,12 +55,13 @@ function App() {
                         <Route index element={<Home />} />
                         <Route path="/agendar" element={<CadConsult />} />
                         <Route path="/agendamentos" element={<Agendamentos />} />
-                        <Route path="/cadastrar-clientes" element={<CadClientes />} />
+                        <Route path="/cadastrar-pacientes" element={<CadClientes />} />
                         <Route path="/usuarios" element={<UsersData />} />
                     </Routes>
                     <Toaster
                         position="top-right"
                         reverseOrder={false}
+                        timeout={30000}
                     />
                 </Layout>
             </Layout>

@@ -15,10 +15,12 @@ function TableList() {
 
     const navigate = useNavigate();
 
+    const VITE_USER_DATABASE_URL = import.meta.env.VITE_USER_DATABASE_URL;
+
     const getUsers = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("https://consultas-server.vercel.app/users");
+            const response = await axios.get(`${VITE_USER_DATABASE_URL}`);
             setUsers(response.data);
         } catch (error) {
             toast.error('Erro ao carregar os usuários');
@@ -29,6 +31,7 @@ function TableList() {
 
     useEffect(() => {
         getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const deleteUser = async (id) => {
@@ -42,16 +45,11 @@ function TableList() {
         })
         if (result.isConfirmed) {
             try {
-                await axios.delete(`https://consultas-server.vercel.app/users/${id}`);
+                await axios.delete(`${VITE_USER_DATABASE_URL}/${id}`);
                 getUsers();
                 toast.success("Usuário deletado");
             } catch (error) {
-                if (error.response && error.response.status === 500) {
-                    toast.success("Usuário deletado com sucesso!");
-                    getUsers();
-                } else {
-                    toast.error(error.message);
-                }
+                toast.error(error.message);
             }
         }
     };
@@ -66,19 +64,12 @@ function TableList() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await axios.put(`https://consultas-server.vercel.app/users/${currentUser.id}`, currentUser);
-            if (response.status === 200) {
-                toast.success("Usuário editado");
-                getUsers();
-            } else {
-                toast.error("Erro ao editar usuário");
-            }
+            await axios.put(`${VITE_USER_DATABASE_URL}/${currentUser.key}`, currentUser);
+            toast.success("Usuário editado com sucesso");
+            getUsers();
+            navigate('/usuarios');
         } catch (error) {
-            if (error.response && error.response.status === 500) {
-                toast.success("Usuário editado com sucesso!");
-                getUsers();
-                navigate("/usuarios");
-            }
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
             setIsOpen(false);
@@ -122,7 +113,7 @@ function TableList() {
 
     const dataSource = users.map((data) => {
         return {
-            key: data.id,
+            key: data._id,
             cpf: data.cpf,
             name: data.name,
             email: data.email,
@@ -160,6 +151,8 @@ function TableList() {
                             {!isLoading && (<button type="submit">Editar</button>)}
                         </div>
                     </form>
+                    
+                    
                 </ModalEditUser>
             )}
         </>

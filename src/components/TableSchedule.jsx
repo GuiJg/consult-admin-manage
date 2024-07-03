@@ -1,14 +1,16 @@
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Alert from "sweetalert2";
 import ModalEditSchedule from "./ModalEditUser";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactInputMask from "react-input-mask";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+
+const VITE_SCHEDULE_DATABASE_URL = import.meta.env.VITE_SCHEDULE_DATABASE_URL;
 
 function TableList() {
-    let id = useParams();
 
     const [dado, setDado] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +38,7 @@ function TableList() {
     const getSchedule = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("https://consultas-server.vercel.app/schedule");
+            const response = await axios.get(`${VITE_SCHEDULE_DATABASE_URL}`);
             setDado(response.data);
         } catch (error) {
             toast.error("Erro ao carregar as consultas");
@@ -60,7 +62,7 @@ function TableList() {
         })
         if (result.isConfirmed) {
             try {
-                await axios.delete(`https://consultas-server.vercel.app/schedule/${id}`);
+                await axios.delete(`${VITE_SCHEDULE_DATABASE_URL}/${id}`);
                 getSchedule();
                 toast.success("Agendamento deletado");
             } catch (error) {
@@ -75,29 +77,23 @@ function TableList() {
     };
 
     const handleEditClick = (schedule) => {
-        console.log(schedule);
         setCurrentSchedule(schedule);
         setIsOpen(true);
     };
 
     const updateSchedule = async (e) => {
         e.preventDefault();
-        console.log(id);
-        console.log(currentSchedule);
         setIsLoading(true);
         try {
-            const response = await axios.put(`https://consultas-server.vercel.app/schedule/${currentSchedule.id}`, currentSchedule);
-            if (response.status === 200) {
-                toast.success("Agendamento editado");
-                getSchedule();
-            } else {
-                toast.error("Erro ao editar agendamento");
-            }
+            await axios.put(`${VITE_SCHEDULE_DATABASE_URL}/${currentSchedule.key}`, currentSchedule);
+            toast.success("Agendamento editado com sucesso");
+            getSchedule();
+            navigate("/agendamentos");
         } catch (error) {
             if (error.response && error.response.status === 500) {
-                toast.success("Usuario editado com sucesso!");
-                getSchedule();
-                navigate("/agendamentos");
+                toast.error("Erro interno do servidor");
+            } else {
+                toast.error(error.message);
             }
         } finally {
             setIsLoading(false);
@@ -138,8 +134,8 @@ function TableList() {
             align: "center",
             render: (_, data) => (
                 <div className="actions-body" style={{ display: 'flex', gap: '1rem' }}>
-                    <button onClick={() => handleEditClick(data)}>Editar</button>
-                    <button onClick={() => deleteSchedule(data.key)}>Excluir</button>
+                    <Button onClick={() => handleEditClick(data)}><EditOutlined /></Button>
+                    <Button onClick={() => deleteSchedule(data.key)}><DeleteOutlined /></Button>
                 </div>
             )
         }
@@ -147,7 +143,7 @@ function TableList() {
 
     const dataSource = dado.map((data) => {
         return {
-            key: data.id,
+            key: data._id,
             cpf: data.cpf,
             name: data.name,
             type: data.type,

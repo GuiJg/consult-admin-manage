@@ -4,6 +4,8 @@ import InputMask from "react-input-mask";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const VITE_SCHEDULE_DATABASE_URL = import.meta.env.VITE_SCHEDULE_DATABASE_URL;
+
 function CreateScheduleForm() {
     const [, setDado] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +36,7 @@ function CreateScheduleForm() {
     const getSchedule = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("https://consultas-server.vercel.app/schedule");
+            const response = await axios.get(`${VITE_SCHEDULE_DATABASE_URL}`);
             setDado(response.data);
         } catch (error) {
             toast.error("Erro ao carregar as consultas" + error.message);
@@ -51,19 +53,12 @@ function CreateScheduleForm() {
         e.preventDefault();
         try {
             setIsLoading(true);
-            const response = await axios.post("https://consultas-server.vercel.app/schedule", { cpf, name, type, date, time });
+            const response = await axios.post(`${VITE_SCHEDULE_DATABASE_URL}`, { cpf, name, type, date, time });
             toast.success(`Consulta para ${response.data.type} criado com sucesso`);
             getSchedule();
+            navigate("/agendamentos");
         } catch (error) {
-            if (error.response && error.response.status === 500) {
-                // Tratar explicitamente o erro 500, se necessário
-                toast.success(`Consulta marcada com sucesso!`);
-                getSchedule();
-                navigate("/agendamentos");
-            } else {
-                // Outros erros
-                toast.error(error.message);
-            }
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
@@ -74,14 +69,15 @@ function CreateScheduleForm() {
             <div className="double-input">
                 <div className="form-content">
                     <label>Nome*</label>
-                    <input type="text" value={name} required onChange={(e) => setName(e.target.value)} placeholder="Nome do paciente" />
+                    <input type="name" id="name" value={name} required onChange={(e) => setName(e.target.value)} placeholder="Nome do paciente" />
                 </div>
                 <div className="form-content">
                     <label>CPF*</label>
                     <InputMask
                         mask="999.999.999-99"
                         maskChar=" "
-                        type="text"
+                        type="cpf"
+                        id="cpf"
                         value={cpf}
                         required
                         onChange={(e) => setCpf(e.target.value)}
@@ -91,7 +87,7 @@ function CreateScheduleForm() {
             </div>
             <div className="form-content">
                 <label>Tipo*</label>
-                <select type="text" value={type} required onChange={(e) => setType(e.target.value)} placeholder="">
+                <select type="text" id="type" value={type} required onChange={(e) => setType(e.target.value)} placeholder="">
                     <option value="">Selecione o tipo de consulta</option>
                     {nameType.map((type) => (
                         <option key={type} value={type}>
@@ -103,12 +99,13 @@ function CreateScheduleForm() {
             <div className="double-input">
                 <div className="form-content">
                     <label>Dia*</label>
-                    <input type="date" value={date} required onChange={(e) => setDate(e.target.value)} placeholder="Digite o dia da consulta" />
+                    <input type="date" id="date" value={date} required onChange={(e) => setDate(e.target.value)} placeholder="Digite o dia da consulta" />
                 </div>
                 <div className="form-content">
                     <label>Hora*</label>
                     <InputMask
                         type="time"
+                        id="time"
                         value={time}
                         required
                         onChange={(e) => setTime(e.target.value)}

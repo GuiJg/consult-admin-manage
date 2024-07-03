@@ -4,6 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import InputMask from 'react-input-mask';
 
+const VITE_USER_DATABASE_URL = import.meta.env.VITE_USER_DATABASE_URL;
+
 function CreateUserForm() {
     const [, setDado] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +19,7 @@ function CreateUserForm() {
     const getUsers = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get("https://consultas-server.vercel.app/users");
+            const response = await axios.get(`${VITE_USER_DATABASE_URL}`);
             setDado(response.data);
         } catch (error) {
             toast.error("Erro ao carregar usuários" + error.message);
@@ -34,19 +36,12 @@ function CreateUserForm() {
         e.preventDefault();
         try {
             setIsLoading(true);
-            const response = await axios.post("https://consultas-server.vercel.app/users", { cpf, name, email, tel });
+            const response = await axios.post(`${VITE_USER_DATABASE_URL}`, { cpf, name, email, tel });
             toast.success(`Usuário ${response.data.name} criado com sucesso`);
             getUsers();
+            navigate("/usuarios");
         } catch (error) {
-            if (error.response && error.response.status === 500) {
-                // Tratar explicitamente o erro 500, se necessário
-                toast.success(`Cliente cadastrado com sucesso!`);
-                getUsers();
-                navigate("/usuarios");
-            } else {
-                // Outros erros
-                toast.error(error.message);
-            }
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
