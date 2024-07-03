@@ -20,7 +20,7 @@ function TableList() {
     const getUsers = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`${VITE_USER_DATABASE_URL}`);
+            const response = await axios.get(`https://consult-manage-backend.vercel.app/users`);
             setUsers(response.data);
         } catch (error) {
             toast.error('Erro ao carregar os usuários');
