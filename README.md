@@ -22,13 +22,19 @@ Este projeto consiste em um sistema de consultas de pacientes desenvolvido utili
 
 ### Backend
 
-- **JSON Server:** Servidor RESTful falso baseado em JSON, utilizado para simular o backend e armazenar os dados dos pacientes e consultas.
+- **Node.js:** Ambiente de execução para JavaScript no servidor.
+- **Express:** Framework para Node.js que facilita a criação de APIs RESTful.
+- **Nodemon:** Ferramenta que reinicia automaticamente o servidor sempre que detecta mudanças no código.
+- **Mongoose:** Biblioteca para modelagem de dados no MongoDB e gerenciamento de esquemas.
+- **MongoDB:** Banco de dados NoSQL orientado a documentos para armazenar os dados.
+- **Cors:** Middleware para permitir requisições de diferentes origens.
+- **Express Async Handler:** Middleware para lidar com funções assíncronas e tratamento de erros.v
 
 ## Links de Acesso
 
-- **Frontend Hospedado:** [https://to-do-list-dashboard.vercel.app/](https://to-do-list-dashboard.vercel.app/)
-- **JSON Server (Pacientes):** [https://consultas-server.vercel.app/users](https://consultas-server.vercel.app/users)
-- **JSON Server (Consultas):** [https://consultas-server.vercel.app/schedule](https://consultas-server.vercel.app/schedule)
+- **Frontend Hospedado:** [https://consult-admin-manage.vercel.app/](https://consult-admin-manage.vercel.app/)
+- **MongoDB (Pacientes):** [https://consult-manage-backend.vercel.app/users](https://consult-manage-backend.vercel.app/users)
+- **MongoDB (Consultas):** [https://consult-manage-backend.vercel.app/schedule](https://consult-manage-backend.vercel.app/schedule)
 
 ## Instalação
 
