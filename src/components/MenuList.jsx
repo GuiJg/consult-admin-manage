@@ -24,8 +24,8 @@ const MenuList = ({ darkTheme }) => {
             <Menu.Item className="menu-item" key="/agendamentos" icon={<ScheduleOutlined />}>
                 <Link to="/agendamentos">Agendamentos</Link>
             </Menu.Item>
-            <Menu.Item className="menu-item" key="/usuarios" icon={<UserOutlined />}>
-                <Link to="/usuarios">Pacientes</Link>
+            <Menu.Item className="menu-item" key="/pacientes" icon={<UserOutlined />}>
+                <Link to="/pacientes">Pacientes</Link>
             </Menu.Item>
             <Menu.Item className="menu-item" key="/cadastrar-pacientes" icon={<UserAddOutlined />}>
                 <Link to="/cadastrar-clientes">Cadastrar Pacientes</Link>

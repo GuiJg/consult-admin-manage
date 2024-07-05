@@ -15,7 +15,7 @@ function CreateUserForm() {
     const [tel, setTel] = useState("");
 
     const navigate = useNavigate();
-
+    
     const getUsers = async () => {
         setIsLoading(true);
         try {
@@ -39,7 +39,7 @@ function CreateUserForm() {
             const response = await axios.post(`${VITE_USER_DATABASE_URL}`, { cpf, name, email, tel });
             toast.success(`Usuário ${response.data.name} criado com sucesso`);
             getUsers();
-            navigate("/usuarios");
+            navigate("/pacientes");
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -52,7 +52,12 @@ function CreateUserForm() {
             <div className="double-input">
                 <div className="form-content">
                     <label>Nome*</label>
-                    <input type="text" value={name} required onChange={(e) => setName(e.target.value)} placeholder="Nome do paciente" />
+                    <input 
+                    type="text" 
+                    value={name} 
+                    required 
+                    onChange={(e) => setName(e.target.value)} placeholder="Nome do paciente" 
+                    />
                 </div>
                 <div className="form-content">
                     <label>CPF*</label>
@@ -62,6 +67,7 @@ function CreateUserForm() {
                         type="text"
                         value={cpf}
                         required
+                        rules={{ required: true }}
                         onChange={(e) => setCpf(e.target.value)}
                         placeholder="CPF do paciente"
                     />

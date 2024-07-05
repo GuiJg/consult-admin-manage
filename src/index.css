@@ -46,7 +46,12 @@ body {
 }
 
 .layout-main{
-	margin: 1% 3% 2% 3%;
+	display: flex;
+	padding: 1% 3% 2% 3%;
+}
+
+.breadcrumb{
+	margin: 1% 0% 1.5% 0%;
 }
 
 #table-title{
@@ -149,18 +154,33 @@ body {
 	padding: 0 0 1rem 1rem;
 }
 
-.toggle {
-	margin-left: 0;
+.div-toggle {
+	display: flex;
+	justify-content: end;
+	width: 100%;
+	padding-right: 8%;
 }
 
-.modal {
+.toggle{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translateX(0);
+	transition: 0.2s;
+}
+
+.toggle.collapsed {
+    transform: translateX(-1rem);
+}
+
+.modal {      
     display: flex;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #000000b3;
 	z-index: 999;
 }
 
@@ -172,7 +192,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -40%);
-    background-color: #fff;
+    background-color: #fafafa;
 	border-radius: 0.5rem;
     box-shadow: 5px 5px 10px 1px #00000074;
     padding: 20px;
@@ -189,12 +209,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.3rem;
+    font-size: 1rem;
     text-transform: uppercase;
 }
 
 .modal label {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+	font-weight: 500;
+	color: #000000c9;
+	margin: 1% 0% 1% 0%;
 }
 
 .modal input {
@@ -341,3 +364,32 @@ body {
 	justify-content: center;
 	width: 95%;
 }
+
+.dashboard{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+	width: 100%;
+	padding: 10% 0% 3% 0%;
+	margin: 4% 0% 0% 0%;
+}
+
+.card-content{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.card-content span{
+	font-size: 3rem;
+}
+
+.card-content p{
+	font-size: 1.5rem;
+	font-weight: 400;
+}
+

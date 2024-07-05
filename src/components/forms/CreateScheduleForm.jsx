@@ -53,12 +53,23 @@ function CreateScheduleForm() {
         e.preventDefault();
         try {
             setIsLoading(true);
-            const response = await axios.post(`${VITE_SCHEDULE_DATABASE_URL}`, { cpf, name, type, date, time });
+            const data = {
+                cpf,
+                name,
+                type,
+                date,
+                time
+            };
+            const response = await axios.post(`${VITE_SCHEDULE_DATABASE_URL}`, data);
             toast.success(`Consulta para ${response.data.type} criado com sucesso`);
             getSchedule();
             navigate("/agendamentos");
-        } catch (error) {
-            toast.error(error.message);
+        } catch (error) {   
+            if (error.response && error.response.status === 500) {
+                toast.error("Erro interno do servidor");
+            } else {
+                toast.error(error.message);
+            }   
         } finally {
             setIsLoading(false);
         }

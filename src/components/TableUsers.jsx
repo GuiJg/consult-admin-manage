@@ -76,7 +76,7 @@ function TableList() {
             await axios.put(`${VITE_USER_DATABASE_URL}/${currentUser.key}`, currentUser);
             toast.success("Usuário editado com sucesso");
             getUsers();
-            navigate('/usuarios');
+            navigate('/pacientes');
         } catch (error) {
             toast.error(error.message);
         } finally {

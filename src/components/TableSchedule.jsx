@@ -1,4 +1,4 @@
-import { Button, Table, Spin } from "antd";
+import { Button, Table, Spin, Select } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -6,7 +6,8 @@ import Alert from "sweetalert2";
 import ModalEditSchedule from "./ModalEditUser";
 import { useNavigate } from "react-router-dom";
 import ReactInputMask from "react-input-mask";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { CheckCircleTwoTone, CloseCircleTwoTone, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Option } from "antd/es/mentions";
 
 const VITE_SCHEDULE_DATABASE_URL = import.meta.env.VITE_SCHEDULE_DATABASE_URL;
 
@@ -64,12 +65,12 @@ function TableList() {
                 setIsDeleteLoading(true);
             }
         });
-        
+
         if (result.isConfirmed) {
             try {
                 await axios.delete(`${VITE_SCHEDULE_DATABASE_URL}/${id}`);
                 getSchedule();
-                toast.success("Agendamento deletado"); 
+                toast.success("Agendamento deletado");
             } catch (error) {
                 if (error.response && error.response.status === 500) {
                     toast.success("Agendamento deletado com sucesso!");
@@ -145,6 +146,24 @@ function TableList() {
                 <div className="actions-body" style={{ display: 'flex', gap: '1rem' }}>
                     <Button id="edit" onClick={() => handleEditClick(data)}><EditOutlined /></Button>
                     <Button id="delete" onClick={() => deleteSchedule(data.key)}><DeleteOutlined /></Button>
+                    <Select
+                        id="status"
+                        placeholder="Status da consulta"
+                        onChange={(e) => setCurrentSchedule({ ...currentSchedule, status: e })}
+                    >
+                        <Option
+                            value="Confirmado"
+                            onClick={() => deleteSchedule(data.key)}
+                        >
+                            <CheckCircleTwoTone twoToneColor="#52c41a" /> Concluida
+                        </Option>
+                        <Option
+                            value="Cancelado"
+                            onClick={() => deleteSchedule(data.key)}
+                        >
+                            <CloseCircleTwoTone twoToneColor="#d40000" /> Cancelada
+                        </Option>
+                    </Select>
                 </div>
             )
         }
@@ -174,11 +193,22 @@ function TableList() {
                         <div className="double-input">
                             <div className="form-content">
                                 <label>CPF*</label>
-                                <ReactInputMask mask="999.999.999-99" type="text" value={currentSchedule.cpf} required onChange={(e) => setCurrentSchedule({ ...currentSchedule, cpf: e.target.value })} placeholder="CPF do usuário" />
+                                <ReactInputMask
+                                    mask="999.999.999-99"
+                                    type="text"
+                                    value={currentSchedule.cpf}
+                                    required
+                                    onChange={(e) => setCurrentSchedule({ ...currentSchedule, cpf: e.target.value })} placeholder="CPF do usuário"
+                                />
                             </div>
                             <div className="form-content">
                                 <label>Nome*</label>
-                                <input type="text" value={currentSchedule.name} required onChange={(e) => setCurrentSchedule({ ...currentSchedule, name: e.target.value })} placeholder="Nome do usuário" />
+                                <input
+                                    type="text"
+                                    value={currentSchedule.name}
+                                    required
+                                    onChange={(e) => setCurrentSchedule({ ...currentSchedule, name: e.target.value })} placeholder="Nome do usuário"
+                                />
                             </div>
                         </div>
                         <div className="form-content">
