@@ -367,13 +367,11 @@ body {
 
 .dashboard{
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
 	flex-wrap: wrap;
-	gap: 1rem;
-	width: 100%;
-	padding: 10% 0% 3% 0%;
-	margin: 4% 0% 0% 0%;
+	gap: 2rem;
 }
 
 .card-content{
@@ -393,3 +391,10 @@ body {
 	font-weight: 400;
 }
 
+.cards-conteiner{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 200rem;
+}

@@ -151,6 +151,9 @@ function TableList() {
                         placeholder="Status da consulta"
                         onChange={(e) => setCurrentSchedule({ ...currentSchedule, status: e })}
                     >
+                        <Option value="">
+                            Status da consulta
+                        </Option>
                         <Option
                             value="Confirmado"
                             onClick={() => deleteSchedule(data.key)}

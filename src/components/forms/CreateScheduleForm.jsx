@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Select } from "antd";
 
 const VITE_SCHEDULE_DATABASE_URL = import.meta.env.VITE_SCHEDULE_DATABASE_URL;
 
 function CreateScheduleForm() {
-    const [, setDado] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [schedules, setSchedules] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cpf, setCpf] = useState("");
     const [name, setName] = useState("");
@@ -33,11 +35,20 @@ function CreateScheduleForm() {
         "Pediatria",
     ]
 
+    const getUser = async () => {
+        try {
+            const response = await axios.get(`https://consult-manage-admin-backend.vercel.app/users`);
+            setUsers(response.data);
+        } catch (error) {
+            toast.error("Erro ao carregar os pacientes");
+        }
+    }
+
     const getSchedule = async () => {
         setIsLoading(true);
         try {
             const response = await axios.get(`${VITE_SCHEDULE_DATABASE_URL}`);
-            setDado(response.data);
+            setSchedules(response.data);
         } catch (error) {
             toast.error("Erro ao carregar as consultas" + error.message);
         } finally {
@@ -47,6 +58,7 @@ function CreateScheduleForm() {
 
     useEffect(() => {
         getSchedule(); 
+        getUser();
     }, [])
 
     const createSchedule = async (e) => {
@@ -66,7 +78,7 @@ function CreateScheduleForm() {
             navigate("/agendamentos");
         } catch (error) {   
             if (error.response && error.response.status === 500) {
-                toast.error("Erro interno do servidor");
+                toast.error("Paciente já possui consulta marcada");
             } else {
                 toast.error(error.message);
             }   
@@ -75,25 +87,60 @@ function CreateScheduleForm() {
         }
     }
 
+    useEffect(() => {
+        if (cpf) {
+            const user = users.find((user) => user.cpf === cpf);
+            if (user) {
+                setName(user.name);
+            }
+        }
+    }, [cpf, users]);
+
+    useEffect(() => {
+        if (name) {
+            const user = users.find((user) => user.name === name);
+            if (user) {
+                setCpf(user.cpf);
+            }
+        }
+    }, [name, users]);
+
     return (
         <form className="create-form" onSubmit={createSchedule}>
             <div className="double-input">
                 <div className="form-content">
                     <label>Nome*</label>
-                    <input type="name" id="name" value={name} required onChange={(e) => setName(e.target.value)} placeholder="Nome do paciente" />
+                    <select 
+                        placeholder="Nome do paciente" 
+                        id="name" 
+                        value={name} 
+                        required 
+                        onChange={(e) => setName(e.target.value)}
+                    >
+                        <option value="">Selecione o nome do paciente</option>
+                        {users.map((user) => (
+                            <option key={user.key} value={user.name}>
+                                {user.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className="form-content">
                     <label>CPF*</label>
-                    <InputMask
-                        mask="999.999.999-99"
-                        maskChar=" "
-                        type="cpf"
-                        id="cpf"
-                        value={cpf}
-                        required
-                        onChange={(e) => setCpf(e.target.value)}
-                        placeholder="CPF do paciente"
-                    />
+                    <select 
+                        type="text" 
+                        id="cpf" 
+                        value={cpf} 
+                        required 
+                        onChange={(e) => setCpf(e.target.value)} placeholder=""
+                    >
+                        <option value="">Selecione o CPF do paciente</option>
+                        {users.map((user) => (
+                            <option key={user.key} value={user.cpf}>
+                                {user.cpf}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
             <div className="form-content">

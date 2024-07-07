@@ -44,9 +44,9 @@ function Home() {
     const canceledAppointments = schedules.filter(schedule => schedule.status === "canceled").length;
 
     return (
-        <>
+        <div className="dashboard">
             <h1>Dashboard</h1>
-            <Spin spinning={isLoading}>
+            <Spin className="cards-container" spinning={isLoading}>
                 <Row gutter={16}>
                     <Col span={8}>
                         <Card
@@ -136,7 +136,7 @@ function Home() {
                                 <List.Item>
                                     <List.Item.Meta
                                         title={item.patientName}
-                                        description={`Data: ${new Date(item.date).toLocaleString()}`}
+                                        description={`Data: ${new Date(item.date).toLocaleDateString()} - Hora: ${item.time}`}
                                     />
                                 </List.Item>
                             )}
@@ -163,7 +163,7 @@ function Home() {
                     </Card>
                 </Col>
             </Row>
-        </>
+        </div>
     )
 }
 
